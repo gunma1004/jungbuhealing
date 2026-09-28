@@ -380,18 +380,45 @@ export const CITIES_DATA: Record<string, CityData> = {
         ]
       },
       {
-        slug: "deokjin",
+            slug: "deokjin",
+
         name: "덕진구",
+
         dongs: [
+
           { slug: "songcheon", name: "송천동" },
+
           { slug: "injeok", name: "인후동" },
+
           { slug: "deokjin-dong", name: "덕진동" },
+
           { slug: "geumam-jj", name: "금암동" },
+
           { slug: "ujeon", name: "우아동" },
+
           { slug: "hoban", name: "호성동" },
-          { slug: "hyosung", name: "혁신도시" }
+
+        { slug: "hyosung", name: "혁신도시" }
         ]
       }
     ]
   }
 };
+
+export const KEYWORD_MODIFIERS = [
+  { prefix: "힐링", sub: "타이 스트레칭 & 전신 케어" },
+  { prefix: "타이", sub: "전신 이완 & 스트레칭 테라피" },
+  { prefix: "아로마", sub: "천연 에센셜 오일 릴렉싱" },
+  { prefix: "스웨디시", sub: "부드러운 림프 순환 케어" },
+  { prefix: "프리미엄 힐링", sub: "지친 일상 속 집중 피로회복" },
+  { prefix: "바디 컨디셔닝", sub: "전문 테라피 샵 케어 안내" },
+];
+
+export function getKeywordModifier(seedText: string) {
+  let hash = 0;
+  for (let i = 0; i < seedText.length; i++) {
+    hash = seedText.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const index = Math.abs(hash) % KEYWORD_MODIFIERS.length;
+  return KEYWORD_MODIFIERS[index];
+}
