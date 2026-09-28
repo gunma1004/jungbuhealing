@@ -2,7 +2,7 @@ import Link from "next/link";
 import { CITIES_DATA, DOMAIN, BRAND_NAME } from "@/app/data";
 import { notFound } from "next/navigation";
 
-// 50개 SEO 패턴
+// 50개 SEO 패턴 자체 내장 (단독 실행 보장)
 export const SEO_PATTERNS = [
   { t: "출장 힐링 마사지 & 바디 스파", d: "출장 마사지 전문 안내. 엄선된 힐링 테라피 샵 정보 및 코스별 정찰제 가격 비교." },
   { t: "출장 센슈얼 마사지 & 프리미엄 림프", d: "출장 마사지 추천 코스. 부드러운 감성 릴렉싱과 쾌적한 전신 바디 컨디셔닝 케어." },
@@ -65,17 +65,15 @@ export function getSeoPattern(seedText: string) {
   return SEO_PATTERNS[index];
 }
 
+// 1. 구 단위 정적 경로 등록 (12개 시/군 하위 전 구 매핑)
 export async function generateStaticParams() {
-  const paths: { city: string; district: string; dong: string }[] = [];
+  const paths: { city: string; district: string }[] = [];
 
   Object.entries(CITIES_DATA).forEach(([citySlug, city]) => {
     city.districts.forEach((district) => {
-      district.dongs.forEach((dong) => {
-        paths.push({
-          city: citySlug,
-          district: district.slug,
-          dong: dong.slug,
-        });
+      paths.push({
+        city: citySlug,
+        district: district.slug,
       });
     });
   });
@@ -83,26 +81,29 @@ export async function generateStaticParams() {
   return paths;
 }
 
-export const dynamicParams = false;
+// dynamicParams를 true로 변경하여 정적 목록 외에도 404 없이 즉시 렌더링되도록 보장
+export const dynamicParams = true;
 
+// 2. 구 단위 SEO 메타데이터 생성 (Next.js 15/16 await params 적용)
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ city: string; district: string; dong: string }>;
+  params: Promise<{ city: string; district: string }> | { city: string; district: string };
 }) {
-  const { city, district, dong } = await params;
+  const resolvedParams = await params;
+  const { city, district } = resolvedParams;
+
   const cityInfo = CITIES_DATA[city];
   const districtInfo = cityInfo?.districts.find((d) => d.slug === district);
-  const dongInfo = districtInfo?.dongs.find((d) => d.slug === dong);
 
-  if (!cityInfo || !districtInfo || !dongInfo) return {};
+  if (!cityInfo || !districtInfo) return {};
 
-  const fullDongName = `${cityInfo.name} ${districtInfo.name} ${dongInfo.name}`;
-  const pattern = getSeoPattern(`${fullDongName}_dong_seo_meta`);
+  const areaFullName = `${cityInfo.name} ${districtInfo.name}`;
+  const pattern = getSeoPattern(`${areaFullName}_district_seo`);
 
-  const title = `${fullDongName} ${pattern.t} | ${BRAND_NAME}`;
-  const description = `${fullDongName} ${pattern.d}`;
-  const url = `${DOMAIN}/${city}/${district}/${dong}`;
+  const title = `${areaFullName} ${pattern.t} | ${BRAND_NAME}`;
+  const description = `${areaFullName} ${pattern.d}`;
+  const url = `${DOMAIN}/${city}/${district}`;
 
   return {
     title,
@@ -112,30 +113,34 @@ export async function generateMetadata({
       title,
       description,
       url,
-      siteName: `${BRAND_NAME} ${fullDongName}`,
+      siteName: `${BRAND_NAME} ${areaFullName}`,
       locale: "ko_KR",
       type: "website",
     },
   };
 }
 
-export default async function DongPage({
+// 3. 구 페이지 본문 (Next.js 15/16 await params 적용)
+export default async function DistrictPage({
   params,
 }: {
-  params: Promise<{ city: string; district: string; dong: string }>;
+  params: Promise<{ city: string; district: string }> | { city: string; district: string };
 }) {
-  const { city, district, dong } = await params;
+  const resolvedParams = await params;
+  const { city, district } = resolvedParams;
+
   const cityInfo = CITIES_DATA[city];
   const districtInfo = cityInfo?.districts.find((d) => d.slug === district);
-  const dongInfo = districtInfo?.dongs.find((d) => d.slug === dong);
 
-  if (!cityInfo || !districtInfo || !dongInfo) return notFound();
+  // 데이터가 없을 때만 404
+  if (!cityInfo || !districtInfo) return notFound();
 
-  const fullDongName = `${cityInfo.name} ${districtInfo.name} ${dongInfo.name}`;
-  const pattern = getSeoPattern(`${fullDongName}_dong_seo_meta`);
+  const areaFullName = `${cityInfo.name} ${districtInfo.name}`;
+  const pattern = getSeoPattern(`${areaFullName}_district_seo`);
 
   return (
     <div className="bg-[#0b0914] text-white font-sans min-h-screen relative overflow-x-hidden pb-32">
+      {/* 헤더 */}
       <header className="sticky top-0 z-40 bg-[#0b0914]/90 backdrop-blur-md border-b border-white/10">
         <div className="max-w-[1160px] mx-auto h-[66px] px-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
@@ -148,67 +153,69 @@ export default async function DongPage({
             href={`tel:${cityInfo.phone}`}
             className="px-4 py-2 rounded-full font-black text-xs sm:text-sm text-black bg-[#00ff88] transition-transform hover:scale-105"
           >
-            📞 {dongInfo.name} 예약 문의
+            📞 {districtInfo.name} 제휴·예약 문의
           </a>
         </div>
       </header>
 
-      <main className="py-12 px-4 max-w-[860px] mx-auto text-center">
+      <main className="py-12 px-4 max-w-[960px] mx-auto text-center">
         <span className="inline-block px-3.5 py-1 rounded-full text-xs font-black mb-3 border border-[#00ff88]/40 bg-[#00ff88]/10 text-[#00ff88]">
-          {fullDongName.toUpperCase()}
+          {areaFullName.toUpperCase()} HEALING & BODY CARE
         </span>
 
-        <h1 className="text-3xl sm:text-4xl font-black mb-4 leading-tight">
-          {fullDongName} {pattern.t}
+        {/* H1: 패턴 기반 타이틀 매핑 */}
+        <h1 className="text-3xl sm:text-5xl font-black mb-4">
+          {areaFullName} {pattern.t}
         </h1>
-        <p className="text-[#d8d2ea] text-base mb-8 max-w-[650px] mx-auto leading-relaxed">
-          {fullDongName} {pattern.d}
+        <p className="text-[#d8d2ea] text-base sm:text-lg mb-8 max-w-[700px] mx-auto leading-relaxed">
+          {areaFullName} {pattern.d}
         </p>
 
-        <div className="p-6 sm:p-8 rounded-3xl bg-[#141024] border border-white/10 text-left space-y-5 mb-10">
-          <div className="border-b border-white/10 pb-4">
-            <h2 className="text-xl font-bold text-white flex items-center gap-2">
-              <span className="text-[#00ff88]">📍</span> {dongInfo.contentHeading || `${fullDongName} 제휴 매장 안내`}
+        {/* 동별 목록 (각 동마다 50개 패턴 분산 적용) */}
+        <section className="mb-12 text-left">
+          <div className="flex items-center justify-between mb-5">
+            <h2 className="text-xl font-bold text-gray-200 flex items-center gap-2">
+              <span className="w-1.5 h-5 bg-[#00ff88] rounded-full"></span>
+              📍 {districtInfo.name} 동별 맞춤 서비스 선택
             </h2>
+            <Link
+              href={`/${city}`}
+              className="text-xs text-gray-400 hover:text-white underline"
+            >
+              ← {cityInfo.name} 시 전체보기
+            </Link>
           </div>
-          <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
-            {dongInfo.contentBody || `${fullDongName} 인근의 검증된 테라피 샵에서 제공하는 맞춤 힐링 프로그램입니다. 프라이빗 룸과 청결한 샤워 시설을 갖추고 있어 지친 심신을 편안하게 릴렉스할 수 있습니다.`}
-          </p>
-          <div className="pt-2 flex flex-wrap gap-2 text-xs">
-            <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-gray-300 font-semibold">
-              #정찰제요금안내
-            </span>
-            <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-gray-300 font-semibold">
-              #위생관리인증
-            </span>
-            <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-gray-300 font-semibold">
-              #프라이빗룸완비
-            </span>
-          </div>
-        </div>
 
-        <div className="flex justify-center gap-3 text-xs sm:text-sm">
-          <Link
-            href={`/${city}/${district}`}
-            className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10 transition-colors"
-          >
-            ← {districtInfo.name} 전체보기
-          </Link>
-          <Link
-            href={`/${city}`}
-            className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10 transition-colors"
-          >
-            ← {cityInfo.name} 전체보기
-          </Link>
-        </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {districtInfo.dongs.map((dong) => {
+              const dongPattern = getSeoPattern(`${areaFullName}_${dong.name}_dong_item`);
+              return (
+                <Link
+                  key={dong.slug}
+                  href={`/${city}/${district}/${dong.slug}`}
+                  className="p-5 rounded-2xl bg-[#141024] border border-white/10 hover:border-[#00ff88]/50 transition-all block group"
+                >
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="font-extrabold text-white text-base group-hover:text-[#00ff88] transition-colors">
+                      {dong.name} {dongPattern.t}
+                    </span>
+                    <span className="text-xs text-gray-400 group-hover:text-white font-bold">바로가기 →</span>
+                  </div>
+                  <p className="text-xs text-gray-400 line-clamp-1">{dong.name} {dongPattern.d}</p>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
       </main>
 
+      {/* 모바일 하단 고정바 */}
       <div className="fixed bottom-3 left-1/2 -translate-x-1/2 w-[calc(100%-20px)] max-w-[480px] bg-[#0b0914]/95 backdrop-blur-xl border border-white/20 p-2.5 rounded-2xl shadow-2xl z-50">
         <a
           href={`tel:${cityInfo.phone}`}
           className="py-3 rounded-xl font-black text-black bg-[#00ff88] text-sm flex items-center justify-center gap-1 active:scale-95 transition-all shadow-lg"
         >
-          📞 {dongInfo.name} 예약 문의 바로 연결 ({cityInfo.phone.slice(-4)})
+          📞 {districtInfo.name} 빠른 예약 연결 ({cityInfo.phone.slice(-4)})
         </a>
       </div>
     </div>
