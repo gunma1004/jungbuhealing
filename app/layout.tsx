@@ -13,22 +13,42 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://dj-cj-touchon.netlify.app"),
+  metadataBase: new URL("https://jungbuhealing.netlify.app"),
   title: {
-    template: "%s | S슬림 프리미엄 홈 테라피",
-    default: "S슬림 | 대전·청주 1:1 맞춤 프리미엄 홈 바디 테라피 & 릴렉싱",
+    template: "%s | 중부건마힐링케어",
+    default: "중부건마힐링케어 | 대전·청주·세종·천안·전주 마사지 & 힐링 테라피",
   },
   description:
-    "대전 및 청주 전 지역 프라이빗 방문 바디케어 안내. 유성구, 서구, 중구, 흥덕구, 청원구 1:1 맞춤 타이, 아로마, 스웨디시 힐링 릴렉스 예약 가이드.",
+    "대전, 청주, 세종, 천안, 아산, 공주, 계룡, 논산, 옥천, 금산, 익산, 전주 마사지·스파·에스테틱 정보 안내. 타이, 아로마, 스웨디시 힐링 케어 샵 추천 및 예약 가이드.",
+  keywords: [
+    "중부건마힐링케어",
+    "대전마사지",
+    "청주마사지",
+    "세종마사지",
+    "천안마사지",
+    "아산마사지",
+    "공주마사지",
+    "계룡마사지",
+    "논산마사지",
+    "옥천마사지",
+    "금산마사지",
+    "익산마사지",
+    "전주마사지",
+    "스파",
+    "아로마테라피",
+    "스웨디시",
+    "타이마사지",
+    "바디케어",
+  ],
   alternates: {
-    canonical: "https://dj-cj-touchon.netlify.app",
+    canonical: "https://jungbuhealing.netlify.app",
   },
   openGraph: {
-    title: "S슬림 | 대전·청주 1:1 맞춤 프리미엄 홈 테라피",
+    title: "중부건마힐링케어 | 중부권 마사지 & 힐링 케어 플랫폼",
     description:
-      "대전·청주 전 지역 프라이빗 방문 힐링 케어 및 바디 컨디셔닝 서비스 안내.",
-    url: "https://dj-cj-touchon.netlify.app",
-    siteName: "S슬림 (S-Slim)",
+      "대전·청주·세종·충청·전북 전 지역 마사지, 스파, 아로마 테라피 힐링 샵 엄선 정보 안내.",
+    url: "https://jungbuhealing.netlify.app",
+    siteName: "중부건마힐링케어",
     locale: "ko_KR",
     type: "website",
   },

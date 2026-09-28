@@ -1,10 +1,10 @@
 export interface DongData {
   slug: string;
   name: string;
-  seoTitle: string;        // 동별 고유 타이틀 (출장 [회피단어] 마사지)
-  seoDesc: string;         // 동별 고유 메타 디스크립션
-  contentHeading: string;  // 동별 고유 H1 제목
-  contentBody: string;     // 동별 고유 본문 내용
+  seoTitle?: string;
+  seoDesc?: string;
+  contentHeading?: string;
+  contentBody?: string;
 }
 
 export interface DistrictData {
@@ -21,296 +21,377 @@ export interface CityData {
   districts: DistrictData[];
 }
 
-export const DOMAIN = "https://dj-cj-touchon.netlify.app";
-export const BRAND_NAME = "S슬림";
+export const DOMAIN = "https://jungbuhealing.netlify.app";
+export const BRAND_NAME = "중부건마힐링케어";
 
 export const CITIES_DATA: Record<string, CityData> = {
+  // 1. 대전광역시 (5개구 전역 핵심 상권)
   daejeon: {
     slug: "daejeon",
     name: "대전",
     phone: "0507-1280-3335",
-    title: "대전 출장 힐링 마사지",
+    title: "대전 마사지 & 힐링 스파 안내",
     districts: [
       {
         slug: "yuseong",
         name: "유성구",
         dongs: [
-          {
-            slug: "bongmyeong",
-            name: "봉명동",
-            seoTitle: "유성온천역 봉명동 출장 힐링 마사지 | S슬림 VIP 스웨디시 & 후불케어",
-            seoDesc: "유성온천역 및 우산거리 번화가 인근 30분 신속 도착! 선입금 없는 100% 현장 후불제로 안전한 VIP 출장 힐링 마사지 서비스입니다.",
-            contentHeading: "대전 봉명동 온천거리 맞춤 24시 출장 힐링 마사지",
-            contentBody: "유성구 봉명동 호텔, 오피스텔 및 번화가 상권 맞춤 케어! 야간 시간 피로에 지친 분들을 위해 봉명동 전 지역 어디든 30분 이내 방문하여 고품격 스웨디시와 힐링 마사지를 선사합니다."
-          },
-          {
-            slug: "guam",
-            name: "구암동",
-            seoTitle: "대전 구암동 출장 타이 마사지 | S슬림 터미널 인근 30분 내방문",
-            seoDesc: "구암동 및 유성복합터미널 부근 빠른 방문 케어. 출장 타이 마사지, 아로마, 건식 관리 선입금 없는 100% 현장 후불 예약.",
-            contentHeading: "구암동 주택가 및 터미널 주변 출장 타이 마사지",
-            contentBody: "구암동 조용한 주거 단지 및 역세권 맞춤형 케어입니다. 장시간 이동과 일상의 스트레스로 뭉친 근육을 내 집처럼 편안한 공간에서 출장 타이 마사지로 부드럽게 이완해 드립니다."
-          },
-          {
-            slug: "gundong",
-            name: "궁동",
-            seoTitle: "대전 궁동 출장 아로마 마사지 | S슬림 대학가 24시 후불케어",
-            seoDesc: "궁동 대학가 및 원룸촌 전 지역 24시간 실시간 예약 가능. 부담 없는 합리적 가격과 100% 후불 출장 아로마 마사지 서비스.",
-            contentHeading: "궁동 대학가 원룸촌 맞춤 출장 아로마 마사지",
-            contentBody: "충남대 인근 궁동 지역의 피로 누적을 해소해 드리는 1:1 케어! 선입금 요구 일체 없이 전문 관리사 도착 후 결제하는 안전한 출장 아로마 마사지를 경험해 보세요."
-          },
-          {
-            slug: "jangdae",
-            name: "장대동",
-            seoTitle: "장대동 출장 홈 마사지 | S슬림 유성시장 주거단지 30분 신속도착",
-            seoDesc: "장대동 빌라 및 주택가 24시간 언제든 빠른 방문. 스웨디시, 타이 출장 홈 마사지 선입금 없는 100% 안심 후불제.",
-            contentHeading: "장대동 주민분들을 위한 1:1 출장 홈 마사지 케어",
-            contentBody: "장대동 전 지역 어디든 전화 한 통이면 30분 내로 전문 관리사가 직접 방문합니다. 철저한 프라이버시 보호와 함께 정성 어린 출장 홈 마사지를 제공합니다."
-          },
-          {
-            slug: "sinsung",
-            name: "신성동",
-            seoTitle: "대전 신성동 출장 스웨디시 마사지 | S슬림 연구단지 맞춤 프라이빗",
-            seoDesc: "대덕연구단지 및 신성동 아파트·원룸 지역 전용 24시 방문. 묵은 피로를 말끔히 풀어주는 출장 스웨디시 마사지 및 아로마 테라피.",
-            contentHeading: "신성동 연구단지 직장인 추천 1:1 출장 스웨디시 마사지",
-            contentBody: "대덕연구개발특구 직장인분들의 높은 선호도를 자랑하는 프로그램입니다. 늦은 퇴근 후나 주말에 편안하게 몸의 밸런스를 되찾아주는 출장 스웨디시 마사지를 만나보세요."
-          },
-          {
-            slug: "jeonmin",
-            name: "전민동",
-            seoTitle: "전민동 출장 릴렉싱 마사지 | S슬림 엑스포 아파트단지 24시 안심방문",
-            seoDesc: "전민동 아파트 및 상가 지역 30분 내 정밀 방문. 스웨디시, 타이, 출장 릴렉싱 마사지 100% 안전 후불 결제.",
-            contentHeading: "전민동 대단지 아파트 전용 출장 릴렉싱 마사지",
-            contentBody: "전민동 지역 주민분들을 위한 프라이빗 맞춤 케어입니다. 선입금을 일체 요구하지 않으므로 믿고 예약하실 수 있으며, 섬세한 출장 릴렉싱 마사지로 피로를 덜어드립니다."
-          },
-          {
-            slug: "gwanpyeong",
-            name: "관평동",
-            seoTitle: "대전 관평동 출장 프리미엄 마사지 | S슬림 테크노밸리 24시케어",
-            seoDesc: "관평동 대전테크노밸리 및 아울렛 인근 신속 방문. 100% 현장 결제로 안심할 수 있는 출장 프리미엄 마사지 VIP 안내.",
-            contentHeading: "관평동 테크노밸리 중심 출장 프리미엄 마사지",
-            contentBody: "산업단지와 대형 상권이 집중된 관평동에서 바쁜 일과를 마친 분들을 위해 원하시는 시간에 맞춰 신속하고 쾌적한 출장 프리미엄 마사지를 선사합니다."
-          },
-          {
-            slug: "wonsinheung",
-            name: "원신흥동",
-            seoTitle: "원신흥동 출장 바디 마사지 | S슬림 도안신도시 프라이빗 힐링",
-            seoDesc: "원신흥동 도안 신도시 전 지역 24시간 연중무휴 방문. 깔끔하고 정성스러운 출장 바디 마사지 & 스웨디시 후불제.",
-            contentHeading: "원신흥동 도안지구 맞춤 출장 바디 마사지 케어",
-            contentBody: "원신흥동 신도시 환경에 맞춘 조용하고 프라이빗한 프리미엄 테라피입니다. 30분 내 도착하여 쌓인 피로를 완벽하게 해소해 드리는 출장 바디 마사지를 제공합니다."
-          },
-        ],
+          { slug: "bongmyeong", name: "봉명동" },
+          { slug: "guam", name: "구암동" },
+          { slug: "gundong", name: "궁동" },
+          { slug: "jangdae", name: "장대동" },
+          { slug: "sinsung", name: "신성동" },
+          { slug: "jeonmin", name: "전민동" },
+          { slug: "gwanpyeong", name: "관평동" },
+          { slug: "wonsinheung", name: "원신흥동" },
+          { slug: "jijok", name: "지족동" },
+          { slug: "banseok", name: "반석동" }
+        ]
       },
       {
         slug: "seo",
         name: "서구",
         dongs: [
-          {
-            slug: "dunsan",
-            name: "둔산동",
-            seoTitle: "대전 둔산동 출장 힐링 마사지 | S슬림 갤러리아·시청가 24시 VIP케어",
-            seoDesc: "둔산동 중심 상권 및 오피스텔 30분 이내 방문. 선입금 0원 100% 후불제 출장 힐링 마사지 & VIP 스웨디시 전문.",
-            contentHeading: "대전 둔산동 중심상권 24시간 출장 힐링 마사지",
-            contentBody: "대전의 중심 둔산동 오피스텔, 호텔 및 주거지 어디서나 전화 한 통으로 최상의 피로 회복을 경험해 보세요. 숙련된 테라피스트의 출장 힐링 마사지가 찾아갑니다."
-          },
-          {
-            slug: "wolpyeong",
-            name: "월평동",
-            seoTitle: "월평동 출장 타이 마사지 | S슬림 정부청사역 인근 30분 내 후불도착",
-            seoDesc: "월평동 전 지역 24시간 방문. 주거지 및 숙박시설 빠른 도착, 선입금 없는 후불 결제 출장 타이 마사지 안내.",
-            contentHeading: "월평동 주거·오피스 지역 밀착형 출장 타이 마사지",
-            contentBody: "정부청사 인근 오피스텔 및 주택가 고객님들을 위해 24시간 대기 중입니다. 지친 묵은 피로와 뭉친 어깨를 시원하게 풀어드리는 출장 타이 마사지를 만나보세요."
-          },
-          {
-            slug: "galma",
-            name: "갈마동",
-            seoTitle: "대전 갈마동 출장 아로마 마사지 | S슬림 원룸밀집지 24시 힐링",
-            seoDesc: "갈마동 주택가 및 상권 30분 신속 방문. 안전한 현장 후불제와 친절한 관리사의 출장 아로마 마사지.",
-            contentHeading: "갈마동 1인 가구 맞춤 출장 아로마 마사지",
-            contentBody: "퇴근 후 내 집에서 편안하게 즐기는 천연 오일 테라피! 선입금 사기 걱정 없는 100% 후불제 출장 아로마 마사지로 하루의 긴장을 부드럽게 녹여드립니다."
-          },
-          {
-            slug: "tanbang",
-            name: "탄방동",
-            seoTitle: "탄방동 출장 홈 마사지 | S슬림 로데오거리 30분 내 방문 안내",
-            seoDesc: "탄방동 로데오거리 부근 및 주거 단지 전 지역 출동. 선입금 일체 없음, 100% 후불제 출장 홈 마사지.",
-            contentHeading: "탄방동 주거·상권 맞춤 24시 출장 홈 마사지",
-            contentBody: "탄방동 어디서든 간편하게 예약해 보세요. 전문 관리사가 30분 내로 방문하여 개개인의 바디 컨디션에 맞춘 섬세한 출장 홈 마사지를 진행합니다."
-          },
-          {
-            slug: "gwejeong",
-            name: "괴정동",
-            seoTitle: "대전 괴정동 출장 스웨디시 마사지 | S슬림 롯데백화점 인근 24시",
-            seoDesc: "괴정동 롯데백화점 부근 및 원룸촌 신속 케어. 출장 스웨디시 마사지 및 타이 케어 선입금 없는 안전 예약.",
-            contentHeading: "괴정동 백화점 상권 1:1 맞춤 출장 스웨디시 마사지",
-            contentBody: "괴정동 상권 및 주택 지역에 계신 고객님들을 위한 24시간 방문 테라피입니다. 스트레스 해소와 림프 순환에 특화된 출장 스웨디시 마사지를 경험해 보세요."
-          },
-          {
-            slug: "yongmun",
-            name: "용문동",
-            seoTitle: "용문동 출장 릴렉싱 마사지 | S슬림 용문역 인근 24시 빠른 후불케어",
-            seoDesc: "용문역 주변 오피스텔 및 주거지 30분 내 도착. 선입금 제로 100% 후불 출장 릴렉싱 마사지 서비스.",
-            contentHeading: "용문동 역세권 인근 프라이빗 출장 릴렉싱 마사지",
-            contentBody: "교통이 편리한 용문역 부근 이점을 살려 용문동 전 지역으로 빠르게 이동합니다. 청결한 위생 관리와 품격 높은 출장 릴렉싱 마사지로 깊은 휴식을 선물합니다."
-          },
-          {
-            slug: "gwanjeo",
-            name: "관저동",
-            seoTitle: "대전 관저동 출장 프리미엄 마사지 | S슬림 마치광장 24시 홈케어",
-            seoDesc: "관저동 마치광장 부근 및 대단지 아파트 신속 방문. 선입금 없는 정직한 출장 프리미엄 마사지 안내.",
-            contentHeading: "관저동 마치광장 및 아파트 단지 맞춤 출장 프리미엄 마사지",
-            contentBody: "관저동 대단지 아파트 및 상가 주택에 계신 고객님들을 위해 집으로 찾아가는 편안한 출장 프리미엄 마사지 서비스를 선사합니다."
-          },
-          {
-            slug: "doan",
-            name: "도안동",
-            seoTitle: "도안동 출장 바디 마사지 | S슬림 도안신도시 VIP 스웨디시 케어",
-            seoDesc: "도안동 신도시 전 지역 30분 내 방문. 품격 높은 퀄리티의 출장 바디 마사지 & 아로마 후불 관리.",
-            contentHeading: "도안동 신도시 단지 전용 VIP 출장 바디 마사지",
-            contentBody: "쾌적한 도안 신도시 환경에 걸맞은 차별화된 최고급 테라피를 제공합니다. 100% 안전 후불제로 편안하게 출장 바디 마사지를 예약해 보세요."
-          },
-        ],
+          { slug: "dunsan", name: "둔산동" },
+          { slug: "wolpyeong", name: "월평동" },
+          { slug: "galma", name: "갈마동" },
+          { slug: "tanbang", name: "탄방동" },
+          { slug: "gwejeong", name: "괴정동" },
+          { slug: "yongmun", name: "용문동" },
+          { slug: "gwanjeo", name: "관저동" },
+          { slug: "doan", name: "도안동" },
+          { slug: "gasuwon", name: "가수원동" },
+          { slug: "mannyeon", name: "만년동" }
+        ]
       },
       {
         slug: "junggu",
         name: "중구",
         dongs: [
-          {
-            slug: "eunhaeng",
-            name: "은행동",
-            seoTitle: "대전 은행동 출장 힐링 마사지 | S슬림 으능정이거리 24시 신속방문",
-            seoDesc: "은행동 으능정이 문화의거리 인근 전 지역 30분 도착. 선입금 0% 안전 후불제 출장 힐링 마사지.",
-            contentHeading: "은행동 으능정이 중심 상권 24시 출장 힐링 마사지",
-            contentBody: "대전 중구 은행동 번화가 및 인근 숙박시설, 오피스텔로 신속하게 방문합니다. 바쁜 하루 끝에 완벽한 피로 해소를 안겨드리는 출장 힐링 마사지입니다."
-          },
-          {
-            slug: "daeheung",
-            name: "대흥동",
-            seoTitle: "대흥동 출장 타이 마사지 | S슬림 문화예술거리 30분 내 후불도착",
-            seoDesc: "대흥동 상권 및 주택가 전 지역 24시간 실시간 예약. 출장 타이 마사지, 스웨디시 선입금 없는 안전 서비스.",
-            contentHeading: "대흥동 맛집·문화거리 인근 1:1 출장 타이 마사지",
-            contentBody: "대흥동 지역 어디서나 전화 한 통으로 손쉽게 예약하세요. 전문 관리사가 30분 이내 방문하여 맞춤형 출장 타이 마사지로 굳은 몸을 시원하게 풀어드립니다."
-          },
-          {
-            slug: "seonhwa",
-            name: "선화동",
-            seoTitle: "대전 선화동 출장 아로마 마사지 | S슬림 중앙로역 24시 안심케어",
-            seoDesc: "선화동 및 중앙로역 인근 전 지역 30분 내 도착. 100% 후불제로 부담 없이 받는 출장 아로마 마사지.",
-            contentHeading: "선화동 주거지 및 오피스 맞춤 출장 아로마 마사지",
-            contentBody: "선화동 일대 오피스텔 및 주택가 고객님들을 위한 프리미엄 테라피입니다. 찌부둥하고 결리는 몸을 향긋한 에센셜 오일 기반의 출장 아로마 마사지로 치유해 드립니다."
-          },
-          {
-            slug: "oryu",
-            name: "오류동",
-            seoTitle: "오류동 출장 스웨디시 마사지 | S슬림 서대전역 인근 30분 신속방문",
-            seoDesc: "오류동 서대전역 부근 및 주거지 24시 출동. 선입금 요구 없는 100% 후불제 출장 스웨디시 마사지.",
-            contentHeading: "오류동 서대전네거리 역세권 24시 출장 스웨디시 마사지",
-            contentBody: "서대전역 및 오류동 상권 인근 어디든 30분 내 출동 가능합니다. 검증된 테라피스트의 섬세한 출장 스웨디시 마사지로 깊은 릴렉스를 경험하세요."
-          },
-          {
-            slug: "taepyeong",
-            name: "태평동",
-            seoTitle: "대전 태평동 출장 홈 마사지 | S슬림 아파트 단지 24시 안심방문",
-            seoDesc: "태평동 아파트 및 주택가 전 지역 빠른 방문. 스웨디시, 아로마 출장 홈 마사지 선입금 없는 정직한 후불제.",
-            contentHeading: "태평동 대단지 아파트 주민 전용 출장 홈 마사지",
-            contentBody: "태평동 주민분들의 컨디션 회복을 위한 1:1 홈 테라피입니다. 이동할 필요 없이 내 집에서 편안하게 출장 홈 마사지를 받아보세요."
-          },
-        ],
+          { slug: "eunhaeng", name: "은행동" },
+          { slug: "daeheung", name: "대흥동" },
+          { slug: "seonhwa", name: "선화동" },
+          { slug: "oryu", name: "오류동" },
+          { slug: "taepyeong", name: "태평동" },
+          { slug: "yuchoen", name: "유천동" },
+          { slug: "munhwa", name: "문화동" }
+        ]
       },
-    ],
+      {
+        slug: "donggu",
+        name: "동구",
+        dongs: [
+          { slug: "yongjeon", name: "용전동" },
+          { slug: "gaya", name: "가양동" },
+          { slug: "jayang", name: "자양동" },
+          { slug: "hongdo", name: "홍도동" },
+          { slug: "panam", name: "판암동" }
+        ]
+      },
+      {
+        slug: "daedeok",
+        name: "대덕구",
+        dongs: [
+          { slug: "songchon", name: "송촌동" },
+          { slug: "jungni", name: "중리동" },
+          { slug: "birae", name: "비래동" },
+          { slug: "sintanjin", name: "신탄진동" }
+        ]
+      }
+    ]
   },
+
+  // 2. 청주시 (4개구 전역 핵심 상권)
   cheongju: {
     slug: "cheongju",
     name: "청주",
     phone: "0507-1280-3336",
-    title: "청주 출장 힐링 마사지",
+    title: "청주 마사지 & 스웨디시 정보",
     districts: [
       {
         slug: "heungdeok",
         name: "흥덕구",
         dongs: [
-          {
-            slug: "bokdae",
-            name: "복대동",
-            seoTitle: "청주 복대동 출장 힐링 마사지 | S슬림 지웰시티·하복대 24시 VIP케어",
-            seoDesc: "복대동 지웰시티 부근 및 하복대 상권 30분 신속 도착! 선입금 0% 100% 현장 후불제 청주 출장 힐링 마사지 안내.",
-            contentHeading: "청주 복대동 지웰시티·하복대 24시 출장 힐링 마사지",
-            contentBody: "청주 흥덕구 복대동은 지웰시티 아파트 단지와 번화가가 인접한 핵심 상권입니다. 고단한 일과를 달래줄 전문 출장 힐링 마사지와 스웨디시를 안전한 후불제로 만나보세요."
-          },
-          {
-            slug: "gagyeong",
-            name: "가경동",
-            seoTitle: "청주 가경동 출장 타이 마사지 | S슬림 터미널 인근 30분 빠른 케어",
-            seoDesc: "가경동 청주시외버스터미널 및 주거 단지 24시간 실시간 출동. 선입금 없는 정직한 후불제 출장 타이 마사지.",
-            contentHeading: "가경동 터미널 부근 및 주거지 출장 타이 마사지",
-            contentBody: "가경동 터미널 인근 숙소나 주택가에 계신 고객님들을 위해 30분 이내 빠른 방문을 약속합니다. 지친 몸에 활력을 되찾아주는 정통 출장 타이 마사지입니다."
-          },
-          {
-            slug: "biha",
-            name: "비하동",
-            seoTitle: "비하동 출장 아로마 마사지 | S슬림 강서지구 24시 안심 방문",
-            seoDesc: "비하동 대형마트 인근 및 주택 단지 전 지역 신속 방문. 출장 아로마 마사지, 스웨디시 100% 현장 후불제.",
-            contentHeading: "비하동 강서지구 인근 1:1 출장 아로마 마사지",
-            contentBody: "비하동 주민분들을 위해 정성을 다하는 프라이빗 방문 서비스입니다. 예약 즉시 이동하여 고객님의 편안한 휴식을 돕는 출장 아로마 마사지를 제공합니다."
-          },
-          {
-            slug: "bongmyeong-cj",
-            name: "봉명동",
-            seoTitle: "청주 봉명동 출장 스웨디시 마사지 | S슬림 봉명사거리 24시 후불케어",
-            seoDesc: "청주 봉명동 상가 및 주택가 전 지역 30분 이내 방문. 선입금 전혀 없는 100% 안심 후불 출장 스웨디시 마사지.",
-            contentHeading: "청주 봉명동 상권 및 주거지 출장 스웨디시 마사지",
-            contentBody: "청주 봉명동은 상권과 주거지가 어우러진 지역입니다. 늦은 야간에도 부담 없이 힐링하실 수 있도록 24시간 출장 스웨디시 마사지 상담과 배차를 운영합니다."
-          },
-        ],
+          { slug: "bokdae", name: "복대동" },
+          { slug: "gagyeong", name: "가경동" },
+          { slug: "biha", name: "비하동" },
+          { slug: "bongmyeong-cj", name: "봉명동" },
+          { slug: "songjeol", name: "송절동" },
+          { slug: "gangseo", name: "강서동" },
+          { slug: "osong", name: "오송읍" }
+        ]
       },
       {
         slug: "cheongwon",
         name: "청원구",
         dongs: [
-          {
-            slug: "yullyang",
-            name: "율량동",
-            seoTitle: "청주 율량동 출장 힐링 마사지 | S슬림 율량2지구 24시 VIP 스웨디시",
-            seoDesc: "율량동 율량2지구 핫플레이스 상권 및 아파트 단지 30분 도착! 100% 후불제로 안심 예약하는 출장 힐링 마사지.",
-            contentHeading: "청주 율량동 핫플레이스 상권 맞춤 출장 힐링 마사지",
-            contentBody: "청원구 율량동 대단지 아파트 및 상권에 계신 고객님들께 품격 높은 케어를 선사합니다. 지친 일상 속 스트레스를 녹여주는 1:1 맞춤 출장 힐링 마사지입니다."
-          },
-          {
-            slug: "ochang",
-            name: "오창읍",
-            seoTitle: "오창 출장 타이 마사지 | S슬림 오창과학단지 & 호수공원 24시 방문",
-            seoDesc: "오창읍 과학단지 오피스텔 및 아파트 30분 신속 방문. 선입금 요구 없는 안전한 후불 출장 타이 마사지.",
-            contentHeading: "오창 과학산업단지 직장인 맞춤 출장 타이 마사지",
-            contentBody: "오창읍 과학단지 직장인분들의 야근 피로를 말끔히 풀어드립니다. 집이나 숙소에서 편안하게 받을 수 있는 전문 출장 타이 마사지를 이용해 보세요."
-          },
-          {
-            slug: "jujung",
-            name: "주중동",
-            seoTitle: "청주 주중동 출장 아로마 마사지 | S슬림 주거단지 24시 안심 케어",
-            seoDesc: "주중동 아파트 및 빌라 단지 전 지역 30분 내 신속 방문. 출장 아로마 마사지, 스웨디시 100% 후불 결제.",
-            contentHeading: "주중동 주거단지 주민 전용 출장 아로마 마사지",
-            contentBody: "주중동 주민분들의 아늑한 힐링을 책임집니다. 선입금을 요구하지 않는 정직한 서비스로 만족도 높은 출장 아로마 마사지를 약속드립니다."
-          },
-        ],
+          { slug: "yullyang", name: "율량동" },
+          { slug: "ochang", name: "오창읍" },
+          { slug: "jujung", name: "주중동" },
+          { slug: "udam", name: "우암동" },
+          { slug: "nae-deok", name: "내덕동" }
+        ]
       },
-    ],
+      {
+        slug: "sangdang",
+        name: "상당구",
+        dongs: [
+          { slug: "yongam", name: "용암동" },
+          { slug: "geumcheon", name: "금천동" },
+          { slug: "bukmun", name: "북문로" },
+          { slug: "seomun", name: "서문동" },
+          { slug: "yeongun", name: "영운동" }
+        ]
+      },
+      {
+        slug: "seowon",
+        name: "서원구",
+        dongs: [
+          { slug: "sanchik", name: "산남동" },
+          { slug: "bunpyeong", name: "분평동" },
+          { slug: "sachang", name: "사창동" },
+          { slug: "gae-sin", name: "개신동" },
+          { slug: "sugok", name: "수곡동" }
+        ]
+      }
+    ]
   },
-};// --- 키워드 모디파이어 설정 (누락된 부분) ---
-export const KEYWORD_MODIFIERS = [
-  { prefix: "힐링", sub: "타이 스트레칭 & 전신 케어" },
-  { prefix: "타이", sub: "전신 이완 & 스트레칭 테라피" },
-  { prefix: "아로마", sub: "천연 에센셜 오일 릴렉싱" },
-  { prefix: "스웨디시", sub: "부드러운 림프 순환 케어" },
-  { prefix: "홈 릴렉싱", sub: "프라이빗 1:1 맞춤 바디케어" },
-  { prefix: "프리미엄 힐링", sub: "지친 일상 속 집중 피로회복" },
-  { prefix: "바디 컨디셔닝", sub: "전문 테라피스트 방문 케어" },
-];
 
-export function getKeywordModifier(seedText: string) {
-  let hash = 0;
-  for (let i = 0; i < seedText.length; i++) {
-    hash = seedText.charCodeAt(i) + ((hash << 5) - hash);
+  // 3. 세종특별자치시
+  sejong: {
+    slug: "sejong",
+    name: "세종",
+    phone: "0507-1280-3335",
+    title: "세종 마사지 & 프리미엄 테라피",
+    districts: [
+      {
+        slug: "central",
+        name: "도심권",
+        dongs: [
+          { slug: "naseong", name: "나성동" },
+          { slug: "boram", name: "보람동" },
+          { slug: "eojin", name: "어진동" },
+          { slug: "areum", name: "아름동" },
+          { slug: "jongchon", name: "종촌동" },
+          { slug: "dodam", name: "도담동" },
+          { slug: "dajeong", name: "다정동" },
+          { slug: "saerom", name: "새롬동" },
+          { slug: "jochiwon", name: "조치원읍" }
+        ]
+      }
+    ]
+  },
+
+  // 4. 천안시 (서북구, 동남구)
+  cheonan: {
+    slug: "cheonan",
+    name: "천안",
+    phone: "0507-1280-3335",
+    title: "천안 마사지 & 에스테틱 포털",
+    districts: [
+      {
+        slug: "seobuk",
+        name: "서북구",
+        dongs: [
+          { slug: "buldang", name: "불당동" },
+          { slug: "dujeong", name: "두정동" },
+          { slug: "seongjeong", name: "성정동" },
+          { slug: "ssangyong", name: "쌍용동" },
+          { slug: "baekseok", name: "백석동" },
+          { slug: "seongseong", name: "성성동" },
+          { slug: "cha-am", name: "차암동" }
+        ]
+      },
+      {
+        slug: "dongnam",
+        name: "동남구",
+        dongs: [
+          { slug: "shinbu", name: "신부동" },
+          { slug: "cheongsu", name: "청수동" },
+          { slug: "cheongdang", name: "청당동" },
+          { slug: "bongmyeong-ca", name: "봉명동" },
+          { slug: "wonseong", name: "원성동" }
+        ]
+      }
+    ]
+  },
+
+  // 5. 아산시
+  asan: {
+    slug: "asan",
+    name: "아산",
+    phone: "0507-1280-3335",
+    title: "아산 온천 & 마사지 케어",
+    districts: [
+      {
+        slug: "main",
+        name: "아산권",
+        dongs: [
+          { slug: "oncheon", name: "온천동" },
+          { slug: "baebang", name: "배방읍" },
+          { slug: "tangjeong", name: "탕정면" },
+          { slug: "yonghwa", name: "용화동" },
+          { slug: "mojong", name: "모종동" },
+          { slug: "dungpo", name: "둔포면" }
+        ]
+      }
+    ]
+  },
+
+  // 6. 공주시
+  gongju: {
+    slug: "gongju",
+    name: "공주",
+    phone: "0507-1280-3335",
+    title: "공주 마사지 & 테라피 정보",
+    districts: [
+      {
+        slug: "main",
+        name: "공주권",
+        dongs: [
+          { slug: "singwan", name: "신관동" },
+          { slug: "geumheung", name: "금흥동" },
+          { slug: "sandeong", name: "산성동" },
+          { slug: "jungdong", name: "중동" },
+          { slug: "okryong", name: "옥룡동" }
+        ]
+      }
+    ]
+  },
+
+  // 7. 계룡시
+  gyeryong: {
+    slug: "gyeryong",
+    name: "계룡",
+    phone: "0507-1280-3335",
+    title: "계룡 힐링 마사지 & 바디케어",
+    districts: [
+      {
+        slug: "main",
+        name: "계룡권",
+        dongs: [
+          { slug: "eomsa", name: "엄사면" },
+          { slug: "geumam", name: "금암동" },
+          { slug: "sindoan", name: "신도안면" },
+          { slug: "duma", name: "두마면" }
+        ]
+      }
+    ]
+  },
+
+  // 8. 논산시
+  nonsan: {
+    slug: "nonsan",
+    name: "논산",
+    phone: "0507-1280-3335",
+    title: "논산 마사지 & 아로마 테라피",
+    districts: [
+      {
+        slug: "main",
+        name: "논산권",
+        dongs: [
+          { slug: "chwiwon", name: "취암동" },
+          { slug: "naedong", name: "내동" },
+          { slug: "buhwang", name: "부창동" },
+          { slug: "ganggyeong", name: "강경읍" },
+          { slug: "yeonmu", name: "연무읍" }
+        ]
+      }
+    ]
+  },
+
+  // 9. 옥천군
+  okcheon: {
+    slug: "okcheon",
+    name: "옥천",
+    phone: "0507-1280-3336",
+    title: "옥천 힐링 마사지 안내",
+    districts: [
+      {
+        slug: "main",
+        name: "옥천권",
+        dongs: [
+          { slug: "okcheon-eup", name: "옥천읍" },
+          { slug: "dongi", name: "동이면" },
+          { slug: "iweon", name: "이원면" }
+        ]
+      }
+    ]
+  },
+
+  // 10. 금산군
+  geumsan: {
+    slug: "geumsan",
+    name: "금산",
+    phone: "0507-1280-3335",
+    title: "금산 힐링 테라피 & 바디케어",
+    districts: [
+      {
+        slug: "main",
+        name: "금산권",
+        dongs: [
+          { slug: "geumsan-eup", name: "금산읍" },
+          { slug: "chubu", name: "추부면" },
+          { slug: "jinsan", name: "진산면" }
+        ]
+      }
+    ]
+  },
+
+  // 11. 익산시
+  iksan: {
+    slug: "iksan",
+    name: "익산",
+    phone: "0507-1280-3335",
+    title: "익산 마사지 & 스웨디시 안내",
+    districts: [
+      {
+        slug: "main",
+        name: "익산권",
+        dongs: [
+          { slug: "yeongdeung", name: "영등동" },
+          { slug: "mohyeon", name: "모현동" },
+          { slug: "sindong", name: "신동" },
+          { slug: "eoyang", name: "어양동" },
+          { slug: "dongsan", name: "동산동" },
+          { slug: "busong", name: "부송동" }
+        ]
+      }
+    ]
+  },
+
+  // 12. 전주시 (완산구, 덕진구)
+  jeonju: {
+    slug: "jeonju",
+    name: "전주",
+    phone: "0507-1280-3335",
+    title: "전주 마사지 & 힐링 에스테틱",
+    districts: [
+      {
+        slug: "wansan",
+        name: "완산구",
+        dongs: [
+          { slug: "hyoja", name: "효자동" },
+          { slug: "jungwhasan", name: "중화산동" },
+          { slug: "seosin", name: "서신동" },
+          { slug: "samcheon", name: "삼천동" },
+          { slug: "pyeonghwa", name: "평화동" },
+          { slug: "gosan", name: "고사동" }
+        ]
+      },
+      {
+        slug: "deokjin",
+        name: "덕진구",
+        dongs: [
+          { slug: "songcheon", name: "송천동" },
+          { slug: "injeok", name: "인후동" },
+          { slug: "deokjin-dong", name: "덕진동" },
+          { slug: "geumam-jj", name: "금암동" },
+          { slug: "ujeon", name: "우아동" },
+          { slug: "hoban", name: "호성동" },
+          { slug: "hyosung", name: "혁신도시" }
+        ]
+      }
+    ]
   }
-  const index = Math.abs(hash) % KEYWORD_MODIFIERS.length;
-  return KEYWORD_MODIFIERS[index];
-}
+};

@@ -1,18 +1,4 @@
-import { MetadataRoute } from 'next';
-import { DOMAIN } from '@/app/data';
+User-Agent: *
+Allow: /
 
-export default function robots(): MetadataRoute.Robots {
-  return {
-    rules: [
-      {
-        userAgent: '*',
-        allow: '/',
-      },
-      {
-        userAgent: ['Googlebot', 'Yeti', 'Daumoa'],
-        allow: '/',
-      },
-    ],
-    sitemap: `${DOMAIN}/sitemap.xml`,
-  };
-}
+Sitemap: https://jungbuhealing.netlify.app/sitemap.xml
