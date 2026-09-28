@@ -2,9 +2,7 @@ import Link from "next/link";
 import { CITIES_DATA, DOMAIN, BRAND_NAME } from "@/app/data";
 import { notFound } from "next/navigation";
 
-// 50개 SEO 템플릿 패턴
-// 규칙 1: 타이틀(t)은 '출장 마사지'를 붙이지 않고 '출장 [수식어] 마사지' 형태 유지
-// 규칙 2: 메타 디스크립션(d)은 지역명 바로 뒤에 '출장 마사지'가 연결되도록 설계
+// 50개 SEO 패턴
 export const SEO_PATTERNS = [
   { t: "출장 힐링 마사지 & 바디 스파", d: "출장 마사지 전문 안내. 엄선된 힐링 테라피 샵 정보 및 코스별 정찰제 가격 비교." },
   { t: "출장 센슈얼 마사지 & 프리미엄 림프", d: "출장 마사지 추천 코스. 부드러운 감성 릴렉싱과 쾌적한 전신 바디 컨디셔닝 케어." },
@@ -58,7 +56,6 @@ export const SEO_PATTERNS = [
   { t: "출장 토탈힐링 마사지 & 종합 테라피", d: "출장 마사지 종합 안내. 중부권 전역의 검증된 우수 매장 정보와 정찰제 요금 비교." }
 ];
 
-// 문자열 해시 기반 50개 패턴 고유 순환 함수
 export function getSeoPattern(seedText: string) {
   let hash = 0;
   for (let i = 0; i < seedText.length; i++) {
@@ -68,7 +65,6 @@ export function getSeoPattern(seedText: string) {
   return SEO_PATTERNS[index];
 }
 
-// 1. 전체 동 단위 정적 경로 등록 (12개 시/군 하위 전체 세부 동)
 export async function generateStaticParams() {
   const paths: { city: string; district: string; dong: string }[] = [];
 
@@ -89,7 +85,6 @@ export async function generateStaticParams() {
 
 export const dynamicParams = false;
 
-// 2. 동 단위 SEO 메타데이터 생성
 export async function generateMetadata({
   params,
 }: {
@@ -105,9 +100,7 @@ export async function generateMetadata({
   const fullDongName = `${cityInfo.name} ${districtInfo.name} ${dongInfo.name}`;
   const pattern = getSeoPattern(`${fullDongName}_dong_seo_meta`);
 
-  // 타이틀: "대전 유성구 봉명동 출장 힐링 마사지 & 바디 스파 | 중부건마힐링케어"
   const title = `${fullDongName} ${pattern.t} | ${BRAND_NAME}`;
-  // 메타디스크립션: "대전 유성구 봉명동 출장 마사지 전문 안내..." (동 이름 바로 뒤에 '출장 마사지')
   const description = `${fullDongName} ${pattern.d}`;
   const url = `${DOMAIN}/${city}/${district}/${dong}`;
 
@@ -126,7 +119,6 @@ export async function generateMetadata({
   };
 }
 
-// 3. 동 페이지 본문 렌더링
 export default async function DongPage({
   params,
 }: {
@@ -144,7 +136,6 @@ export default async function DongPage({
 
   return (
     <div className="bg-[#0b0914] text-white font-sans min-h-screen relative overflow-x-hidden pb-32">
-      {/* 헤더 */}
       <header className="sticky top-0 z-40 bg-[#0b0914]/90 backdrop-blur-md border-b border-white/10">
         <div className="max-w-[1160px] mx-auto h-[66px] px-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
@@ -167,7 +158,6 @@ export default async function DongPage({
           {fullDongName.toUpperCase()}
         </span>
 
-        {/* H1: 패턴 기반 타이틀 매핑 */}
         <h1 className="text-3xl sm:text-4xl font-black mb-4 leading-tight">
           {fullDongName} {pattern.t}
         </h1>
@@ -175,7 +165,6 @@ export default async function DongPage({
           {fullDongName} {pattern.d}
         </p>
 
-        {/* 동별 상세 안내 카드 */}
         <div className="p-6 sm:p-8 rounded-3xl bg-[#141024] border border-white/10 text-left space-y-5 mb-10">
           <div className="border-b border-white/10 pb-4">
             <h2 className="text-xl font-bold text-white flex items-center gap-2">
@@ -198,7 +187,6 @@ export default async function DongPage({
           </div>
         </div>
 
-        {/* 상위 경로로 돌아가기 링크 */}
         <div className="flex justify-center gap-3 text-xs sm:text-sm">
           <Link
             href={`/${city}/${district}`}
@@ -215,7 +203,6 @@ export default async function DongPage({
         </div>
       </main>
 
-      {/* 모바일 하단 고정바 */}
       <div className="fixed bottom-3 left-1/2 -translate-x-1/2 w-[calc(100%-20px)] max-w-[480px] bg-[#0b0914]/95 backdrop-blur-xl border border-white/20 p-2.5 rounded-2xl shadow-2xl z-50">
         <a
           href={`tel:${cityInfo.phone}`}
