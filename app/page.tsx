@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Logo from "@/components/Logo";
 import Image from "next/image";
 import { CITIES_DATA, DOMAIN, BRAND_NAME } from "@/app/data";
 
