@@ -23,7 +23,7 @@ export async function generateStaticParams() {
 
 export const dynamicParams = false;
 
-// 동 단위 메타데이터 (동별 고유 회피 키워드 부여)
+// 1. 메타데이터에 data.ts에서 만든 고유 seoTitle, seoDesc 적용
 export async function generateMetadata({
   params,
 }: {
@@ -39,8 +39,9 @@ export async function generateMetadata({
   const areaFullName = `${cityInfo.name} ${districtInfo.name} ${dongInfo.name}`;
   const modifier = getKeywordModifier(areaFullName);
 
-  const title = `${dongInfo.name} 출장 ${modifier.prefix} 마사지 | ${BRAND_NAME} ${cityInfo.name}`;
-  const description = `${areaFullName} 24시간 출장 ${modifier.prefix} 마사지 전문. ${modifier.sub}. 30분 내 빠른 도착, 선입금 없는 100% 현장 후불제.`;
+  // data.ts의 데이터 우선 적용, 없을 경우 백폴백
+  const title = dongInfo.seoTitle || `${dongInfo.name} 출장 ${modifier.prefix} 마사지 | ${BRAND_NAME} ${cityInfo.name}`;
+  const description = dongInfo.seoDesc || `${areaFullName} 24시간 출장 ${modifier.prefix} 마사지 전문. ${modifier.sub}.`;
   const url = `${DOMAIN}/${city}/${district}/${dong}`;
 
   return {
@@ -112,14 +113,15 @@ export default async function DongPage({
           {areaFullName} 24H CARE
         </span>
 
-        {/* H1: 동별 고유 회피 키워드 */}
-        <h1 className="text-3xl sm:text-5xl font-black mb-4">
-          {dongInfo.name} 출장 {modifier.prefix} 마사지
+        {/* 2. H1 제목에 고유 contentHeading 적용 */}
+        <h1 className="text-3xl sm:text-5xl font-black mb-6 word-keep-all">
+          {dongInfo.contentHeading || `${dongInfo.name} 출장 ${modifier.prefix} 마사지`}
         </h1>
-        <p className="text-[#e1d9f5] text-base sm:text-lg mb-8 max-w-[650px] mx-auto leading-relaxed">
-          {areaFullName} 30분 이내 방문! {modifier.sub} <br />
-          선입금 요구 없는 100% 안전 현장 후불제로 안심하고 이용하세요.
-        </p>
+        
+        {/* 3. 네이버 봇이 읽을 수 있는 고유 본문 텍스트 (SEO 핵심) */}
+        <div className="text-[#e1d9f5] text-base sm:text-lg mb-10 max-w-[700px] mx-auto leading-loose text-justify break-keep">
+          <p>{dongInfo.contentBody}</p>
+        </div>
 
         {/* 케어 코스 안내 */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left mb-12">
@@ -140,6 +142,23 @@ export default async function DongPage({
           </div>
         </div>
 
+        {/* 4. 고유 FAQ 섹션 추가 (유사문서 회피용 치트키) */}
+        {dongInfo.faqs && dongInfo.faqs.length > 0 && (
+          <section className="text-left bg-[#140f24] p-6 sm:p-8 rounded-3xl border border-white/10 mb-12">
+            <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+              <span className="text-2xl">💡</span> {dongInfo.name} 자주 묻는 질문
+            </h3>
+            <div className="space-y-5">
+              {dongInfo.faqs.map((faq, idx) => (
+                <div key={idx} className="bg-white/5 p-5 rounded-2xl border border-white/5">
+                  <p className="font-bold mb-2 text-lg" style={{ color: mainColor }}>Q. {faq.question}</p>
+                  <p className="text-sm text-gray-300 leading-relaxed">A. {faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* 인근 다른 동 링크 */}
         <section className="text-left bg-[#140f24] p-6 rounded-3xl border border-white/10">
           <h3 className="text-base font-bold text-white mb-3">
@@ -154,9 +173,9 @@ export default async function DongPage({
                   <Link
                     key={otherDong.slug}
                     href={`/${city}/${district}/${otherDong.slug}`}
-                    className="py-2.5 px-2 rounded-xl bg-white/5 border border-white/10 text-xs text-gray-200 font-bold hover:bg-white/20 transition-all truncate"
+                    className="py-2.5 px-2 rounded-xl bg-white/5 border border-white/10 text-xs text-gray-200 font-bold hover:bg-white/20 transition-all truncate text-center"
                   >
-                    {otherDong.name} 출장 {otherMod.prefix}
+                    {otherDong.name} {otherMod.prefix}
                   </Link>
                 );
               })}
