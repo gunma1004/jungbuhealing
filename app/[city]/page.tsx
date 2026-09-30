@@ -50,7 +50,13 @@ export async function generateMetadata({
   const { city, district } = resolvedParams;
 
   const cityInfo = CITIES_DATA[city];
-  const districtInfo = cityInfo?.districts.find((d) => d.slug === district);
+  
+  // 터미널에 에러 원인을 찍어보는 코드 추가
+  if (!cityInfo) {
+    console.log("❌ 404 에러 발생! 입력된 city 값:", city);
+    console.log("✅ 현재 CITIES_DATA에 있는 키값들:", Object.keys(CITIES_DATA));
+    return notFound();
+  }
 
   if (!cityInfo || !districtInfo) return {};
 
